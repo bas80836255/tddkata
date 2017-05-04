@@ -8,6 +8,7 @@
     <artifactId>katagarora</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <url>git@github.com:bas80836255/tddkata.git</url>
     <properties>
         <credential>27d4ffd5-bbb7-4b58-86ca-5a936720704e</credential>
         <giturl>git@github.com:bas80836255/tddkata.git</giturl>

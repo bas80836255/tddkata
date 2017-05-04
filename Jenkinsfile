@@ -73,11 +73,15 @@ def version(text) {
   def matcher = text =~ '<version>(.+)</version>'
   matcher ? matcher[0][1] : null
 }
+
+@NonCPS
 def credential(text1) {
   def matcher = text1 =~ '<credential>(.+)</credential>'
   matcher ? matcher[0][1] : null
 }
+
+@NonCPS
 def giturl(text2) {
-  def matcher = text2 =~ '<giturl>(.+)</giturl>'
+  def matcher = text2 =~ '<url>(.+)</url>'
   matcher ? matcher[0][1] : null
 }
