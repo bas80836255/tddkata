@@ -1,7 +1,7 @@
 node{
         stage('SCM Checkout') {
 
-        pom = readMavenPom file 'pom.xml'
+        // pom = readMavenPom file 'pom.xml'
 
 
                     def version = version(readFile('pom.xml'))
