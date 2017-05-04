@@ -4,18 +4,16 @@ node{
         // pom = readMavenPom file 'pom.xml'
 
 
-                    def version = version(readFile('pom.xml'))
-                    if (version) {
-                        echo "Building version ${version}"
+                    // def version = version(readFile('pom.xml'))
+                    //if (version) {
+                       // echo "Building version ${version}"
                         // version = version.replace(".", "-")
-                        env.BUILD_VERSION = version
-                        echo "env.Building version ${env.BUILD_VERSION}"
-                    }
+                        //env.BUILD_VERSION = version
+                       // echo "env.Building version ${env.BUILD_VERSION}"
+                   // }
 
                     def credential = credential(readFile('pom.xml'))
                     echo credential
-                    echo ${credential}
-                    echo env.credential
                     if (credential) {
                         echo "Building credential ${credential}"
                         // credential = credential.replace(".", "-")
