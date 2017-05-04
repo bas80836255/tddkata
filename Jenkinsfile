@@ -24,7 +24,7 @@ node{
                     submoduleCfg: [], 
                     userRemoteConfigs: [[
                         credentialsId: '${env.CREDENTIAL}',
-                        url: '${env.GITURL}'',
+                        url: '${env.GITURL}',
                         remote: 'origin',
                         fetch: '+refs/heads/*:refs/remotes/origin/* +refs/merge-requests/*/head:refs/remotes/origin/merge-requests/*'
                         ]]
