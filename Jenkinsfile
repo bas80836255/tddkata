@@ -1,14 +1,6 @@
 node{
         stage('SCM Checkout') {
 
-                    def version = version(readFile('pom.xml'))
-                    if (version) {
-                        echo "Building version ${version}"
-                        // version = version.replace(".", "-")
-                        env.BUILD_VERSION = version
-                        echo "env.Building version ${env.BUILD_VERSION}"
-                    }
-
                     def credential = credential(readFile('pom.xml'))
                     if (credential) {
                         echo "Building credential ${credential}"
@@ -16,7 +8,7 @@ node{
                         env.CREDENTIAL = credential
                         echo "env.Building credential ${env.CREDENTIAL}"
                     }
-                    
+
                     def giturl = giturl(readFile('pom.xml'))
                     if (giturl) {
                         echo "Building giturl ${giturl}"
@@ -67,12 +59,6 @@ node{
             // step([$class: 'CheckStylePublisher', pattern: '/target/checkstyle-result.xml', unstableTotalAll:'0',unhealthy:'100', healthy:'100'])
             // step([$class             : 'FindBugsPublisher', canComputeNew      : false,    pattern            : '**/findbugs/*.xml',   unstableTotalHigh  : '0'  unstableTotalNormal: '5',      unstableTotalLow   : '10'] )
         }
-}
-
-@NonCPS
-def version(text) {
-  def matcher = text =~ '<version>(.+)</version>'
-  matcher ? matcher[0][1] : null
 }
 
 @NonCPS
