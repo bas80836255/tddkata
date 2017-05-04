@@ -1,19 +1,28 @@
 node{
         stage('SCM Checkout') {
 
-                    def giturl = giturl(readFile('pom.xml'))
-                    if (giturl) {
-                        echo "Building giturl ${giturl}"
-                        // giturl = giturl.replace(".", "-")
-                        env.GITURL = giturl
-                        echo "env.Building giturl ${env.GITURL}"
+                    def version = version(readFile('pom.xml'))
+                    if (version) {
+                        echo "Building version ${version}"
+                        // version = version.replace(".", "-")
+                        env.BUILD_VERSION = version
+                        echo "env.Building version ${env.BUILD_VERSION}"
                     }
+
                     def credential = credential(readFile('pom.xml'))
                     if (credential) {
                         echo "Building credential ${credential}"
                         // credential = credential.replace(".", "-")
                         env.CREDENTIAL = credential
                         echo "env.Building credential ${env.CREDENTIAL}"
+                    }
+                    
+                    def giturl = giturl(readFile('pom.xml'))
+                    if (giturl) {
+                        echo "Building giturl ${giturl}"
+                        // giturl = giturl.replace(".", "-")
+                        env.GITURL = giturl
+                        echo "env.Building giturl ${env.GITURL}"
                     }
 
                 checkout([
@@ -29,14 +38,6 @@ node{
                         fetch: '+refs/heads/*:refs/remotes/origin/* +refs/merge-requests/*/head:refs/remotes/origin/merge-requests/*'
                         ]]
                 ])
-
-            def version = version(readFile('pom.xml'))
-            if (version) {
-                echo "Building version ${version}"
-                // version = version.replace(".", "-")
-                env.BUILD_VERSION = version
-                echo "env.Building version ${env.BUILD_VERSION}"
-            }
 
         }
 
@@ -75,13 +76,13 @@ def version(text) {
 }
 
 @NonCPS
-def credential(text1) {
-  def matcher = text1 =~ '<credential>(.+)</credential>'
+def credential(text) {
+  def matcher = text =~ '<credential>(.+)</credential>'
   matcher ? matcher[0][1] : null
 }
 
 @NonCPS
-def giturl(text2) {
-  def matcher = text2 =~ '<url>(.+)</url>'
+def giturl(text) {
+  def matcher = text =~ '<giturl>(.+)</giturl>'
   matcher ? matcher[0][1] : null
 }
