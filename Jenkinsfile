@@ -1,7 +1,19 @@
 node{
         stage('SCM Checkout') {
 
+        pom = readMavenPom file 'pom.xml'
+
+
+                    def version = version(readFile('pom.xml'))
+                    if (version) {
+                        echo "Building version ${version}"
+                        // version = version.replace(".", "-")
+                        env.BUILD_VERSION = version
+                        echo "env.Building version ${env.BUILD_VERSION}"
+                    }
+
                     def credential = credential(readFile('pom.xml'))
+                    echo credential
                     if (credential) {
                         echo "Building credential ${credential}"
                         // credential = credential.replace(".", "-")
@@ -10,6 +22,7 @@ node{
                     }
 
                     def giturl = giturl(readFile('pom.xml'))
+                    echo giturl
                     if (giturl) {
                         echo "Building giturl ${giturl}"
                         // giturl = giturl.replace(".", "-")
@@ -59,6 +72,12 @@ node{
             // step([$class: 'CheckStylePublisher', pattern: '/target/checkstyle-result.xml', unstableTotalAll:'0',unhealthy:'100', healthy:'100'])
             // step([$class             : 'FindBugsPublisher', canComputeNew      : false,    pattern            : '**/findbugs/*.xml',   unstableTotalHigh  : '0'  unstableTotalNormal: '5',      unstableTotalLow   : '10'] )
         }
+}
+
+@NonCPS
+def version(text) {
+  def matcher = text =~ '<version>(.+)</version>'
+  matcher ? matcher[0][1] : null
 }
 
 @NonCPS
