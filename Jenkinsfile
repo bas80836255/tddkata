@@ -23,8 +23,8 @@ node{
                     extensions: [],//[[$class: 'CleanCheckout']], 
                     submoduleCfg: [], 
                     userRemoteConfigs: [[
-                        credentialsId: 'env.CREDENTIAL',
-                        url: 'env.GITURL',
+                        credentialsId: '${env.CREDENTIAL}',
+                        url: '${env.GITURL}',
                         remote: 'origin',
                         fetch: '+refs/heads/*:refs/remotes/origin/* +refs/merge-requests/*/head:refs/remotes/origin/merge-requests/*'
                         ]]
@@ -73,14 +73,10 @@ def version(text) {
   def matcher = text =~ '<version>(.+)</version>'
   matcher ? matcher[0][1] : null
 }
-
-@NonCPS
 def credential(text1) {
   def matcher = text1 =~ '<credential>(.+)</credential>'
   matcher ? matcher[0][1] : null
 }
-
-@NonCPS
 def giturl(text2) {
   def matcher = text2 =~ '<giturl>(.+)</giturl>'
   matcher ? matcher[0][1] : null
