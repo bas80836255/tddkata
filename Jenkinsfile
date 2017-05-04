@@ -10,8 +10,8 @@ node{
                     extensions: [],//[[$class: 'CleanCheckout']],
                     submoduleCfg: [],
                     userRemoteConfigs: [[
-                        credentialsId: '${env.CREDENTIAL}',
-                        url: '${env.GITURL}',
+                        credentialsId: '${credential}',
+                        url: '${giturl}',
                         remote: 'origin',
                         fetch: '+refs/heads/*:refs/remotes/origin/* +refs/merge-requests/*/head:refs/remotes/origin/merge-requests/*'
                         ]]
