@@ -3,14 +3,27 @@ node{
 
         // pom = readMavenPom file 'pom.xml'
 
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: 'origin/master']],
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [],//[[$class: 'CleanCheckout']],
+                    submoduleCfg: [],
+                    userRemoteConfigs: [[
+                        credentialsId: '${env.CREDENTIAL}',
+                        url: '${env.GITURL}',
+                        remote: 'origin',
+                        fetch: '+refs/heads/*:refs/remotes/origin/* +refs/merge-requests/*/head:refs/remotes/origin/merge-requests/*'
+                        ]]
+                ])
 
-                    // def version = version(readFile('pom.xml'))
-                    //if (version) {
-                       // echo "Building version ${version}"
+                    def version = version(readFile('pom.xml'))
+                    if (version) {
+                       echo "Building version ${version}"
                         // version = version.replace(".", "-")
-                        //env.BUILD_VERSION = version
-                       // echo "env.Building version ${env.BUILD_VERSION}"
-                   // }
+                        env.BUILD_VERSION = version
+                       echo "env.Building version ${env.BUILD_VERSION}"
+                    }
 
                     def credential = credential(readFile('pom.xml'))
                     echo credential
@@ -29,21 +42,6 @@ node{
                         env.GITURL = giturl
                         echo "env.Building giturl ${env.GITURL}"
                     }
-
-                checkout([
-                    $class: 'GitSCM', 
-                    branches: [[name: 'origin/master']], 
-                    doGenerateSubmoduleConfigurations: false, 
-                    extensions: [],//[[$class: 'CleanCheckout']], 
-                    submoduleCfg: [], 
-                    userRemoteConfigs: [[
-                        credentialsId: '${env.CREDENTIAL}',
-                        url: '${env.GITURL}',
-                        remote: 'origin',
-                        fetch: '+refs/heads/*:refs/remotes/origin/* +refs/merge-requests/*/head:refs/remotes/origin/merge-requests/*'
-                        ]]
-                ])
-
         }
 
         configFileProvider(
