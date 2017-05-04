@@ -1,5 +1,21 @@
 node{
         stage('SCM Checkout') {
+
+                    def giturl = giturl(readFile('pom.xml'))
+                    if (giturl) {
+                        echo "Building giturl ${giturl}"
+                        // giturl = giturl.replace(".", "-")
+                        env.GITURL = giturl
+                        echo "env.Building giturl ${env.GITURL}"
+                    }
+                    def credential = credential(readFile('pom.xml'))
+                    if (credential) {
+                        echo "Building credential ${credential}"
+                        // credential = credential.replace(".", "-")
+                        env.CREDENTIAL = credential
+                        echo "env.Building credential ${env.CREDENTIAL}"
+                    }
+
                 checkout([
                     $class: 'GitSCM', 
                     branches: [[name: 'origin/master']], 
@@ -7,27 +23,35 @@ node{
                     extensions: [],//[[$class: 'CleanCheckout']], 
                     submoduleCfg: [], 
                     userRemoteConfigs: [[
-                        credentialsId: '27d4ffd5-bbb7-4b58-86ca-5a936720704e', 
-                        url: 'git@github.com:bas80836255/tddkata.git',
+                        credentialsId: ${env.CREDENTIAL},
+                        url: ${env.GITURL},
                         remote: 'origin',
                         fetch: '+refs/heads/*:refs/remotes/origin/* +refs/merge-requests/*/head:refs/remotes/origin/merge-requests/*'
                         ]]
                 ])
+
+            def version = version(readFile('pom.xml'))
+            if (version) {
+                echo "Building version ${version}"
+                // version = version.replace(".", "-")
+                env.BUILD_VERSION = version
+                echo "env.Building version ${env.BUILD_VERSION}"
+            }
 
         }
 
         configFileProvider(
         [configFile(fileId: '1840430d-b0ba-486a-be42-c97116317ef3', variable: 'MAVEN_SETTINGS')]){
         stage('Build & Unit Testing'){
-            
-            
+
+
             def mvnCmd = "mvn -s $MAVEN_SETTINGS -B clean install -X -Dmaven.timezone='Asia/Bangkok'"
             withEnv(["PATH+MAVEN=${tool 'mavenlocal'}/bin"]) {
-            sh mvnCmd 
+            sh mvnCmd
             }
 
         }
-        
+
         }
 
         stage('Static Code Analysis'){
@@ -42,4 +66,22 @@ node{
             // step([$class: 'CheckStylePublisher', pattern: '/target/checkstyle-result.xml', unstableTotalAll:'0',unhealthy:'100', healthy:'100'])
             // step([$class             : 'FindBugsPublisher', canComputeNew      : false,    pattern            : '**/findbugs/*.xml',   unstableTotalHigh  : '0'  unstableTotalNormal: '5',      unstableTotalLow   : '10'] )
         }
+}
+
+@NonCPS
+def version(text) {
+  def matcher = text =~ '<version>(.+)</version>'
+  matcher ? matcher[0][1] : null
+}
+
+@NonCPS
+def credential(text) {
+  def matcher = text =~ '<credential>(.+)</credential>'
+  matcher ? matcher[0][1] : null
+}
+
+@NonCPS
+def giturl(text) {
+  def matcher = text =~ '<giturl>(.+)</giturl>'
+  matcher ? matcher[0][1] : null
 }
