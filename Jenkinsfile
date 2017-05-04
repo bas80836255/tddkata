@@ -14,6 +14,8 @@ node{
 
                     def credential = credential(readFile('pom.xml'))
                     echo credential
+                    echo ${credential}
+                    echo env.credential
                     if (credential) {
                         echo "Building credential ${credential}"
                         // credential = credential.replace(".", "-")
