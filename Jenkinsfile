@@ -1,8 +1,9 @@
 node {
+        echo env.BRANCH_NAME
         stage('SCM Checkout') {
                 checkout([
                     $class: 'GitSCM', 
-                    branches: [[name: 'origin/${gitlabSourceBranch}']], 
+                    branches: [[name: 'origin/${env.BRANCH_NAME}']],
                     doGenerateSubmoduleConfigurations: false, 
                     extensions: [],//[[$class: 'CleanCheckout']], 
                     submoduleCfg: [], 
