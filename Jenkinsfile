@@ -43,7 +43,7 @@ node {
         }
 
         stage('Static Code Analysis'){
-            analyzeBas 'hello'
+            analyzeBas()
             }
 
 
