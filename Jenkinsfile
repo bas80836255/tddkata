@@ -3,7 +3,7 @@ node {
         stage('SCM Checkout') {
                 checkout([
                     $class: 'GitSCM', 
-                    branches: [[name: 'origin/${env.BRANCH_NAME}']],
+                    branches: [[name: 'origin/env.BRANCH_NAME']],
                     doGenerateSubmoduleConfigurations: false, 
                     extensions: [],//[[$class: 'CleanCheckout']], 
                     submoduleCfg: [], 
