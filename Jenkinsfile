@@ -43,7 +43,7 @@ node {
         }
 
         stage('Static Code Analysis'){
-            sayHello()
+            Analyze()
             }
             
 
