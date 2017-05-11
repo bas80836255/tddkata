@@ -26,28 +26,19 @@ node {
         }
 
         stage('Build & Unit Testing'){
-            gitlabCommitStatus("build") {
-
                 configFileProvider(
-                        [configFile(fileId: '720fc814-8d86-46d9-ac73-b0eb1b5c3d03', variable: 'MAVEN_SETTINGS')]){
+                        [configFile(fileId: '1840430d-b0ba-486a-be42-c97116317ef3', variable: 'MAVEN_SETTINGS')]){
                             //Define maven command
-                                            def mvnCmd = "mvn -s $MAVEN_SETTINGS -B clean install -X -Dmaven.timezone='Asia/Bangkok' -Dmaven.repo.local=${WORKSPACE}/.repository"
-
-                                            withEnv([
-                                               'MAVEN_OPTS=-Xmx1024m -Xms1024m -Xdebug',
-                                               'HOME=.',
-                                            ]) {
-                                                // Run maven command
-                                                sh mvnCmd
-                                            }
-                                            // Vote up on merge request
-                                            addGitLabMRComment comment: ':+1:'
+                                            def mvnCmd = "mvn -s $MAVEN_SETTINGS -B clean install -X -Dmaven.timezone='Asia/Bangkok'"
+                                                        withEnv(["PATH+MAVEN=${tool 'mavenlocal'}/bin"]) {
+                                                        sh mvnCmd
+                                                        }
 
                         }
 
 
 
-            }
+
         }
 
         stage('Static Code Analysis'){
