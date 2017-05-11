@@ -27,24 +27,14 @@ node {
         }
 
         stage('Build & Unit Testing'){
-                configFileProvider(
-                        [configFile(fileId: '1840430d-b0ba-486a-be42-c97116317ef3', variable: 'MAVEN_SETTINGS')]){
-                            //Define maven command
-                                            def mvnCmd = "mvn -s $MAVEN_SETTINGS -B clean install -X -Dmaven.timezone='Asia/Bangkok'"
-                                                        withEnv(["PATH+MAVEN=${tool 'mavenlocal'}/bin"]) {
-                                                        sh mvnCmd
-                                                        }
-
-                        }
-
-
-
+               mavenBuild()
 
         }
 
         stage('Static Code Analysis'){
             analyzeBas()
-            }
+            
+        }
 
 
 }
