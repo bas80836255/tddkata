@@ -1,4 +1,3 @@
-@Library('bas')
 node {
         echo env.BRANCH_NAME
         stage('SCM Checkout') {
