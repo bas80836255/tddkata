@@ -8,7 +8,7 @@ node {
         }
 
         stage('Build & Unit Testing'){
-        
+
                mavenBuild()
 
         }
