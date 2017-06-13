@@ -16,7 +16,7 @@
 
     <scm>
         <url>https://github.com/bas80836255/tddkata</url>
-        <connection>scm:git:git://github.com/bas80836255/tddkata.git</connection>
+        <connection>scm:git:https://github.com/bas80836255/tddkata.git</connection>
         <developerConnection>scm:git:git@github.com:bas80836255/tddkata.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
