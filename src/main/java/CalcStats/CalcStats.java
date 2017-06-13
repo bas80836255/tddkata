@@ -30,7 +30,7 @@ public class CalcStats {
             System.out.println(output);
         }
         return result;
-        
+
     }
 
     public int convertStringNum(String stringNum) {
