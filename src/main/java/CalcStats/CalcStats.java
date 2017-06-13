@@ -31,6 +31,7 @@ public class CalcStats {
         }
         return result;
 
+        
     }
 
     public int convertStringNum(String stringNum) {
