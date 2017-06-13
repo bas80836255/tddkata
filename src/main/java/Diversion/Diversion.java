@@ -14,6 +14,7 @@ public class Diversion {
             }
             System.out.println("result : " + result);
         }
+        
         return sequence.length - result;
     }
 }
